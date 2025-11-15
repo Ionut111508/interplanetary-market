@@ -1,7 +1,9 @@
 package ecommerce.interplanetary.controller;
 
 import ecommerce.interplanetary.dto.LandPlotDTO;
+import ecommerce.interplanetary.entity.LandPlot;
 import ecommerce.interplanetary.service.LandPlotService;
+import ecommerce.interplanetary.service.WeatherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,19 +11,32 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/landplots")
 @RequiredArgsConstructor
 public class LandPlotController {
 
     private final LandPlotService landPlotService;
+    private final WeatherService weatherService;
 
-    // GET ALL
-    @GetMapping
-    public ResponseEntity<List<LandPlotDTO>> getAllLandPlots() {
-        return ResponseEntity.ok(landPlotService.getAllLandPlots());
+
+    @GetMapping()
+    public List<LandPlotDTO> getAllLandPlots() {
+        List<LandPlot> plots = landPlotService.getAll();
+        return plots.stream()
+                .map(plot -> {
+                    Double temp = null;
+                    if (plot.getPlanet() != null && plot.getPlanet().getName() != null) {
+                        temp = weatherService.getTemperature(plot.getPlanet().getName());
+                    }
+                    return new LandPlotDTO(plot, temp);
+                })
+                .collect(Collectors.toList());
     }
+
 
     // GET BY PLANET
     @GetMapping("/planet/{planetId}")

@@ -1,14 +1,16 @@
 package ecommerce.interplanetary.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ecommerce.interplanetary.entity.Planet;
 import ecommerce.interplanetary.service.PlanetService;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/planets")
-@CrossOrigin(origins = "http://localhost:3000")
+@PreAuthorize("hasAnyAuthority('USER','ADMIN')")
 public class PlanetController {
 
     private final PlanetService planetService;

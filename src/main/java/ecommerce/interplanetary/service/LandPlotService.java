@@ -88,4 +88,8 @@ public class LandPlotService {
                 .orElseThrow(() -> new RuntimeException("LandPlot not found"));
         landPlotRepository.delete(landPlot);
     }
+
+    public List<LandPlot> getAll() {
+        return landPlotRepository.findAll();
+    }
 }
