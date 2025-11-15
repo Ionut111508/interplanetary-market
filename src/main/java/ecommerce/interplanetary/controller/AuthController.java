@@ -1,6 +1,7 @@
 package ecommerce.interplanetary.controller;
 
 import ecommerce.interplanetary.dto.LoginRequest;
+import ecommerce.interplanetary.entity.Role;
 import ecommerce.interplanetary.entity.User;
 import ecommerce.interplanetary.repository.UserRepository;
 import ecommerce.interplanetary.security.JwtService;
@@ -33,7 +34,7 @@ public class AuthController {
 
         return ResponseEntity.ok(Map.of(
                 "username", user.getUsername(),
-                "roles", user.getRoles().stream().map(r -> r.getName()).toList(),
+                "roles", user.getRoles().stream().map(Role::getName).toList(),
                 "token", token
         ));
     }

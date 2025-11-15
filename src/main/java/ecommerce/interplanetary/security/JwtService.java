@@ -16,7 +16,6 @@ public class JwtService {
 
     private static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
-    // Expirație token: 1 zi
     private static final long EXPIRATION = 1000 * 60 * 60 * 24;
 
     public String generateToken(User user) {

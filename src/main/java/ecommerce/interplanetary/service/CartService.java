@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -29,7 +28,6 @@ public class CartService {
     private final LandPlotRepository landPlotRepository;
     private final UserRepository userRepository;
 
-    // DTO pentru view
     @lombok.Data
     @lombok.AllArgsConstructor
     public static class CartViewDto {
